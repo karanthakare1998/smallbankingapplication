@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!--index page controller -->
+<script src="/static/js/constrollers/index.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container"  ng-controller="INDEX~CONTROLLER">
+
+      <input type="hidden" id="page_name" value="{{page_name}}">
+      <input type="hidden" id="input_date" value="{{input_date}}">
+      <input type="hidden" id="input_ID" value="{{ID}}">
+
+      <img src="/static/img/Bank.png"   class="img-fluid rounded mx-auto d-block mb-4" >
+
+<!-- ******************************************************************************************** -->
+<!-- ****************************** Except 'ADD' ************************************************ -->
+<div ng-show="showfirst">
+<div class="row align-items-center mb-2 mt-5">
+    <div class="col-7">
+    <button type="button" class="btn btn-primary" ng-click="SHOW_ALL_ACC_DATA()">All Account Data </button>
+            <button class="btn btn-success" type="button"  ng-show="showbalanceamt" > Balance Amount : Rs. ..balanceamt.. </button>
+    </div>
+    <div class="col">
+    </div>
+    <div class="col align-bottom">
+      <div class="input-group ">
+  <input type="date" class="form-control py-0"  ng-model="selecteddate">
+  <button class="btn btn-secondary " type="button"  ng-click="FILTER_DATE_WISE()" >Search</button>
+</div>
+    </div>
+</div>
+
+ <table class="table table-hover" id="dtBasicExample">
+   <thead class="table-dark">
+     <tr>
+       <th>Account No</th>
+       <th>Date</th>
+       <th>Transaction Details</th>
+        <th>Value Date</th>
+         <th>Withdrawal AMT</th>
+         <th>Deposit AMT</th>
+         <th>Balance AMT</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr ng-repeat="eachrecord in records">
+       <td>.. eachrecord['Account No']..</td>
+       <td>.. eachrecord['Date']..</td>
+       <td>.. eachrecord['Transaction Details']..</td>
+        <td>.. eachrecord['Value Date']..</td>
+         <td> .. eachrecord['Withdrawal AMT'].. </td>
+          <td>.. eachrecord['Deposit AMT']..</td>
+          <td>.. eachrecord['Balance AMT']..</td>
+     </tr>
+     <tr ng-if="recordnotfound">
+       <td colspan=7 class="text-center bg-faint"> No record present !!!</td>
+     </tr>
+   </tbody>
+ </table>
+</div>
+
+<!-- *************************************** END END END **************************************** -->
+<!-- ******************************************************************************************** -->
+
+
+
+
+
+
+
+<!-- ******************************************************************************************** -->
+<!-- ***********************************   'ADD' ************************************************ -->
+<div ng-show="!showfirst" class="container px-5 mx-5 form-border mb-4">
+  <div class="col-md-12 text-center h2 py-4">
+   ACCOUNT FORM
+  </div>
+  <form class="row g-3 needs-validation" novalidate>
+    <div class="col-md-4">
+      <label for="validationCustom01" class="form-label">Account Number</label>
+      <input type="number" class="form-control" id="validationCustom01"  required ng-model="accno">
+      <div class="invalid-feedback">
+        Please enter bank account number !
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom02" class="form-label">Date</label>
+      <input type="date" class="form-control" id="validationCustom02" ng-model="date" required>
+      <div class="invalid-feedback">
+        Please select date !
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom02" class="form-label">Value Date</label>
+      <input type="date" class="form-control" id="validationCustom03"  ng-model="valuedate" required>
+      <div class="invalid-feedback">
+        Please select value date !
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label for="validationCustom02" class="form-label">Transaction Details</label>
+      <textarea class="form-control" aria-label="With textarea" id="validationCustom04" ng-model="details" required></textarea>
+      <div class="invalid-feedback">
+        Please Transaction Details !
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustomUsername" class="form-label">Withdrawal Amount</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">₹</span>
+        <input type="number" class="form-control" id="validationCustom05" ng-model="WA"required>
+        <div class="invalid-feedback">
+            Please enter Withdrawal Amount !
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustomUsername" class="form-label">Deposit Amount</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">₹</span>
+        <input type="number" class="form-control" id="validationCustom06" ng-model="DA" required>
+        <div class="invalid-feedback">
+                Please enter Deposit Amount !
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <label for="validationCustomUsername" class="form-label">Balance Amount</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">₹</span>
+        <input type="number" class="form-control" id="validationCustom06" ng-model="BalanceAmt" required>
+        <div class="invalid-feedback">
+                Please enter Balance Amount !
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 text-center">
+          <button class="btn btn-warning  mb-3 px-3" type="reset">Reset </button> <button class="btn btn-success  mb-3" type="submit" ng-click="SubmitForm()">Submit </button>
+    </div>
+  </form>
+
+  <table class="table table-hover" id="dtBasicExample">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Account No</th>
+        <th>Date</th>
+         <th>Value Date</th>
+         <th>Transaction Details</th>
+          <th>Withdrawal AMT</th>
+          <th>Deposit AMT</th>
+          <th>Balance AMT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="eachrecord in records">
+       <td>.. eachrecord.id  ..</td>
+        <td>.. eachrecord.accno ..</td>
+        <td>.. eachrecord.date ..</td>
+        <td>.. eachrecord.valuedate ..</td>
+         <td>.. eachrecord.txndetail ..</td>
+          <td> ..  eachrecord.WA .. </td>
+           <td>.. eachrecord.DA ..</td>
+           <td>.. eachrecord.BA ..</td>
+      </tr>
+      <tr ng-if="recordnotfound">
+        <td colspan=8 class="text-center bg-faint"> No record present !!!</td>
+      </tr>
+    </tbody>
+  </table>
+
+ </div>
+
+<!-- *************************************** END END END **************************************** -->
+<!-- ******************************************************************************************** -->
+ </div>
+
+{% endblock %}
